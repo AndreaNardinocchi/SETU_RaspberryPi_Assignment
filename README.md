@@ -98,3 +98,17 @@ This means that the user is on, and the countdown has just begun (countdownSpeak
     else:
         print("No target IP addresses found on the network.")
 ```
+
+## countdownSpeak.py
+
+As the **countdownSpeak.py** program has been called in into the ip_detector.py file by using the function _countdownSpeak()_ , let's take a close look at this file. 
+
+In here, Sense Hat is called into action for the very first time. Additionally, pyttsx3 is imported too (It is a text-to-speech conversion library in Python https://codefather.tech/blog/text-to-speech-in-python/ , which needs to be install into the raspberry pi:
+
+```
+# Linux installation requirements
+sudo apt update && sudo apt install espeak ffmpeg libespeak1
+
+```
+)
+

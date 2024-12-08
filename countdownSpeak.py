@@ -1,8 +1,8 @@
 from sense_hat import SenseHat
-
 import time
 import pyttsx3
 
+# source: https://codefather.tech/blog/text-to-speech-in-python/ 
 # One time initialization
 engine = pyttsx3.init()
 

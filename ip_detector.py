@@ -8,22 +8,21 @@ def find_myLaptopIP_Address(target_IPs, ip_range="192.168.0.1/24"):
     found_IPs=[]
     for IP in target_IPs: 
          if IP.lower() in str(result).lower():
-             found_IPs.append(IP)
-             
+             found_IPs.append(IP)         
 
     return found_IPs
 
 
 # Test code
 if __name__ == "__main__":
-    # Example list of target MAC addresses to search for on the network
+    # Example list of target IP addresses to search for on the network
     target_IPs = [
-        "192.168.0.56",  # Replace with actual Ip addresses you expect to find
+        "192.168.0.56",  # Replace with actual IP addresses you expect to find
         "11:22:33:44:55:66"
     ]
 
     print("Scanning network...Is Andrea on???")
-    # Call the function to find the specified MAC addresses
+    # Call the function to find the specified IP addresses
     found_devices = find_myLaptopIP_Address(target_IPs)
 
     # Display the result

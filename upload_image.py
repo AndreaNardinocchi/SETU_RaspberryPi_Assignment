@@ -3,7 +3,7 @@ import os
 import json
 
 
-GLITCH_API_URL = "https://polar-polar-dianella.glitch.me/upload"  
+GLITCH_API_URL = "https://instapi.glitch.me/upload"  
 
 def upload_image(image_path):
     if os.path.exists(image_path):

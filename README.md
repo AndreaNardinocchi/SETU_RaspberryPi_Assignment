@@ -99,11 +99,20 @@ This means that the user is on, and the countdown has just begun (countdownSpeak
         print("No target IP addresses found on the network.")
 ```
 
+### Sources:
+https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
+
 ## countdownSpeak.py
 
-As the **countdownSpeak.py** program has been called in into the ip_detector.py file by using the function _countdownSpeak()_ , let's take a close look at this file. 
+As the **countdownSpeak.py** program has been called in into the ip_detector.py file by using the function _countdownSpeak()_ , let's take a close look at this file.
 
-In here, Sense Hat is called into action for the very first time. Additionally, pyttsx3 is imported too (It is a text-to-speech conversion library in Python https://codefather.tech/blog/text-to-speech-in-python/ , which needs to be install into the raspberry pi:
+In here, **Sense Hat** is called into action for the very first time.
+
+As the countdown kicks off into the _countdownSpeak()_ function, Sense Hat display a clock on its LEDs whose program can be checked in the **digitalClock.py** called in via the _clock()_ function:
+
+![alt text](image-2.png)
+
+ Additionally, **pyttsx3** is imported too (It is a text-to-speech conversion library in Python, which needs to be install into the raspberry pi:
 
 ```
 # Linux installation requirements
@@ -112,3 +121,165 @@ sudo apt update && sudo apt install espeak ffmpeg libespeak1
 ```
 )
 
+As the countdown hits the 15 seconds the Sense Hat LEDs will replace the clock with a full-blown 'bright blue' background, which will, then, turn into red when hitting the 12 seconds threshold. This is just a prelude of the countdown finally showing numbers when the 9 seconds threshold gets hit. 
+
+This effect has been achieved by utilizing a _for_ _loop_ with _if_ statements:
+
+```
+def countdownSpeak():
+
+    for i in range(3600, -1, -1):
+        sense.set_rotation(180) 
+        if i >15:
+            from digitalClock import clock
+            clock()        
+        elif i>12 :
+           sense.clear(B)
+        elif i > 9 :
+           sense.clear(R)
+        elif i >= 4 :
+            text = R
+            bg = W
+            sense.show_letter(str(i), text, bg)
+        else:
+            text = G
+            bg = X
+            sense.show_letter(str(i), text, bg)
+        time.sleep(1)
+```
+
+When the countdown hits '0', a new _for_ _loop_ countdown with _if_ statements will kick in with the Sense Hat LEDs showing a message, and a voice will demand that the user step away from the desk and leave the room.
+
+Once the new countdown hits the '0' threshold, the **music.py** program will be triggered and an mp3 will play in the background.
+
+```
+for i in range(10, -1, -1):
+        if i>0:
+            sense.show_message("BOOM!!!!", scroll_speed=0.03, text_colour=[255, 255, 255])
+            bg = X 
+            # Speaking
+            engine.say("Andrea shut that freaking laptop, and get the hell out of here now")
+            # Flush the say() queue and play the audio
+            engine.runAndWait()
+            # Program will not continue execution until
+            # all speech is done talking
+            time.sleep(0.1) 
+        elif i<=0:
+            sense.clear(255,255,255)
+            from music import patMusicOn
+            patMusicOn()
+            time.sleep(0.1) 
+        else:
+            sense.clear(255,255,255)
+```
+
+### Sources:
+https://projects.raspberrypi.org/en/projects/countdown-timer/2
+
+https://codefather.tech/blog/text-to-speech-in-python/
+
+https://pimylifeup.comraspberry-pi-sense-hat-digital-clock/ 
+
+https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
+
+## music.py
+
+This is an interesting program, which presents some interesting commands and features such as _mpg_ _321_ to have the raspberry pi play an mp3.
+
+First of all, though, _os_ is imported, which is a _module that provides a portable way of using operating system dependent functionality_ as per https://docs.python.org/3/library/os.html , which essentially enables a user to use terminal commands into a program.
+
+This is pivotal for the music.py program to work as intended, since _mpg 321_ only works by using the command in the terminal, as shown below:
+
+```
+mpg 321 music.mp3
+```
+
+In order to use it, _mpg 321_ needs to get installed first:
+
+```
+sudo apt-get update
+
+sudo apt-get -y install mpg321
+```
+
+However, the goal was not to use one song only, but to avail of a mini-list of 3 songs to be randomly picked out every time the program is run.
+Therefore, I resorted to using a Python’s built-in module in called _random_ to work with random data, and outlined below are the steps followed to get the program to randomly pick out a song:
+
+```
+# creating variables
+pat1 = 'PatMethenyGroup_FollowMe_live.mp3'
+pat2 = 'PatMethenyGroup_IntoTheDream.mp3'
+pat3 = 'Pat_Metheny_Group_-_Last_Train_Home.mp3'
+
+# list of items
+List = [pat1, pat2, pat3]
+
+# mpg 321 installation https://installati.one/install-mpg321-debian-11/
+try: 
+    def patMusic():
+        print("Pat is on!!!\n")
+        os.system(f"mpg321 {random.choice(List)}") 
+        os.system("python blynkingMail.py")
+    
+except KeyboardInterrupt:
+    os.clear()
+```
+
+Nevertheless, the idea here was also to combine the music in the background with some light effects (basically, running **animationColors.py** at the same time as _mpg 321_ is run) to create a 'disco effect' like.
+
+After some research, I discovered that the _threading_ module had a very interesting solution, which I applied as follow:
+
+```
+from threading import Thread
+
+t1 = Thread(target=animatedLights)
+threads = [t1]
+t2 = Thread(target=patMusic)
+threads += [t2]
+
+t1.start()
+t2.start()
+
+try: 
+    def patMusicOn():
+        
+        for tloop in threads:
+            tloop.join()
+
+except KeyboardInterrupt:
+    os.clear()
+
+```
+_t1_ and _t2_ are variables calling the functions _animatedLights_ and _patMusic_ by using the callable object _target_, which will, in turn, evoked by the _start()_ function.
+
+The _for loop_, then, and the join() function joins them together, and enables them to run simultaneously.
+
+Once the mp3 song has come to an end, the following command will get triggered:
+
+```
+python blynkingMail.py
+```
+
+in
+```
+def patMusic():
+        print("Pat is on!!!\n")
+        os.system(f"mpg321 {random.choice(List)}") 
+        os.system("python blynkingMail.py")
+```
+
+## blynkingMail.py
+
+### Sources:
+
+https://docs.python.org/3/library/os.html
+
+https://installati.one/install-mpg321-debian-11/ 
+
+https://www.geeksforgeeks.org/randomly-select-elements-from-list-without-repetition-in-python/
+
+https://forums.raspberrypi.com/viewtopic.php?t=235173
+
+https://docs.python.org/3/library/threading.html
+
+https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys

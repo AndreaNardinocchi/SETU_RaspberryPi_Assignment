@@ -250,7 +250,7 @@ except KeyboardInterrupt:
     os.clear()
 
 ```
-_t1_ and _t2_ are variables calling the functions _animatedLights_ and _patMusic_ by using the callable object _target_, which will, in turn, evoked by the _start()_ function.
+_t1_ and _t2_ are variables calling the functions _animatedLights_ and _patMusic_ by using the callable object _target_, which will, in turn, be evoked by the _start()_ function.
 
 The _for loop_, then, and the join() function joins them together, and enables them to run simultaneously.
 
@@ -268,8 +268,6 @@ def patMusic():
         os.system("python blynkingMail.py")
 ```
 
-## blynkingMail.py
-
 ### Sources:
 
 https://docs.python.org/3/library/os.html
@@ -283,3 +281,89 @@ https://forums.raspberrypi.com/viewtopic.php?t=235173
 https://docs.python.org/3/library/threading.html
 
 https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
+
+
+## blynkingMail.py
+
+This program will seamlessly connect the raspberry pi with the Blynk App to really create a IoT environment experience for the user. The main aim in here is to have a camera take a a picture of the user on the desk, upload it to a webiste (sort of an instagram feed landing page), and trigger an automation feature in Blynk which will see the user get sent an email, and a Blynk app notification on their mobile.
+
+In order to achieve this, the user, of course, needs to open an account in https://blynk.io/ , and read the documentation to set up a template, and automations in https://blynk.cloud/dashboard/129389/automations (this link is for my account automation).
+
+Then, the _BlynkLib_ library needs to be imported into the program to create the connection. However, it is also worth noticing that 2 internal modules need to be imported in order for the camera to be able to take a photo and upload it to a URL/landing page:
+
+```
+import BlynkLib
+from time import sleep
+from sense_hat import SenseHat
+import paho.mqtt.client as mqtt
+from urllib.parse import urlparse
+from datetime import datetime
+from capture_image_usb import captureImagePath
+from upload_image import upload_image
+```
+By doing it, we are essentially nesting 2 programs into the blynkingMail.py, which are **capture_image_usb.py**, and **upload_image.py**.
+The reason why the first of the above-mentioned program has a __usb.py_ suffix sort of is because I resolved to use a 'logi' webcamera placed on top of my screen and plugeed into the raspberry pi via USB instead of using a raspberry pi camera. The reason for that comes down to ensuring that a clear picture of the user on the desk gets taken since it also needs to be uploaded online, hence, some high level of visibility plays in.
+
+To be able to use the USB webcome, the following packages were installed:
+
+```
+sudo apt install fswebcam
+
+sudo usermod -a -G video <username>
+```
+
+At the end of the randome song played out, the program will take a picture of the user, send an email, notify the user on their mobile via the Blynk app, and upload the photon on https://instapi.glitch.me/ (A sort of insta photo feed landing page craeted _ad hoc_ for this project https://github.com/AndreaNardinocchi/instaPi).
+
+Additionally, the transport layer protocol **MQTT** was utilized as a broker to send out the image publication topic to subscribers (ex.**client_sub.py** wich should be run from a different machine or from the same one, but outside the remote raspberry pi environment for testing purposes):
+
+![alt text](image-3.png)
+
+blynkingEmail.py
+
+![alt text](image-4.png)
+
+client_sub.py
+
+The notification and email were received:
+
+![alt text](image-5.png)
+
+![alt text](image-6.png)
+
+The photo uploaded to https://instapi.glitch.me/ can be observed below (lucky for the user, they had already stepped away from the desk!!!):
+
+![alt text](image-7.png)
+
+
+![alt text](image-8.png)
+
+More info about the #instaPi landing page can be found in https://github.com/AndreaNardinocchi/instaPi .
+
+### Sources:
+
+https://www.raspberrypi.com/documentation/computers/camera_software.html#use-a-usb-webcam
+
+https://github.com/AndreaNardinocchi/instaPi
+
+https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
+
+
+
+## Bugs/Defects
+
+The audio was meant to go out on a te laptop speakers via bluetooth, but, alas, after numerous attempts I failed. Therefore, a tester/user will have the plug in wired headset into the raspberry pi to be able to listen to the audio.
+
+
+## Contact info
+Users can contact me at andrea.nardinocchi76@gmail.com or by clicking on the website underfoot in https://instapi.glitch.me/ where they can find my name linking to my Linkedin profile.
+
+## Who maintains and contributes to the project
+This project will be maintained by myself only.
+
+## Acknowledgements
+My lecture at SETU Frank Walsh provided all info I needed to build and set up the programs by transferring knowledge of Computer Networks and Systems, IoT apps, python and son on.
+
+Special thanks to Wolfgang Helnvein who came to my rescue when I could not get my projects uploaded to gitHub. He masterfully walked me through all the required steps, and has been ready to jump in, provide knowledge, recommendations and encouragement. I will never find words that can describe how much I appreciate Wolfgang as a co-student, and as a human being first and foremost.
+Also, a big thank you to Pedro Royo who shared some useful resources on Slack, whic I availed of.
+
+Thank you all again!!!

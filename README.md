@@ -20,7 +20,7 @@ This App attempts to provide a solution to an issue that many computer science e
 
 In a nutshell, we are having the Raspberry Pi keep track of the time a user spends on their PC by detecting their PC IP address and triggering a countdown (1 or 2 hours). The Sense Hat will kick off the countdown by showing a clock at first, and colored LEDs at some point, which will, in turn, change to a different color as seconds pass by. At the very last 9 seconds of the 1 or 2 hours countdown above-mentioned, the raspberry pi LEDs will show the countdown in numbers. 
 
-When the countdown is at zero, a warning message will display on the Sense Hat LEDs as well as an audio message will be triggered demanding that the user step away from the desk.
+When the countdown is at zero, a warning message will display on the Sense Hat LEDs as well as an audio message will be triggered demanding that the user step away from the desk (headsets jacked in are needed for the audio).
 After a few seconds a Pat Metheny Group mp3 song will start playing in the background, which, basically, gives another 5/6 minutes of _grace period_ to the user (sort of 'sweet final warning').
 
 Once the song is over, the camera will take a photo of the user on the desk, and a notification will be sent to the user's phone as well as an email informing about the event (picture taken) with a link of the Glitch landing page, which will show a sort of photo feeds of the user itself. 
@@ -29,9 +29,9 @@ The goal would be to have the program send off a notification and email to a thi
 
 
 # Why the project is useful
-The project is useful for those users that struggle with anxiety and electronic devices addiction, as it attempts to offer some sort of help. For the project to work, the full support of a friend or family member is required who will take on the burden of checking the Glitch landing page upon receving a notification/email and , maybe, ring the user to check in on them. 
+The project is useful for those users that struggle with anxiety and electronic devices addiction, as it attempts to offer some sort of help. For the project to work, the full support of a friend or family member is required who will take on the burden of checking the Glitch landing page upon receving a notification/email and, maybe, ring the user to check in on them. 
 
-However, the main purpose of the project was for the writer to be exposed to the use of pyhton, Raspberry Pi, Sense Hat, pythonand Glitch, Bulma components, HTML, JavaScript, and node.js.
+However, the main purpose of the project was for the writer to be exposed to the use of pyhton, Raspberry Pi, Sense Hat, Glitch, Bulma components, HTML, JavaScript, and node.js.
 
 # How users can get started with the project
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     ]
 ```
 
-To get the program up and running, the user only need to input the below command into their terminal:
+To get the program up and running, the user only needs to input the below command into their terminal:
 
 ```
 pythong ip_detector.py
@@ -303,7 +303,7 @@ from capture_image_usb import captureImagePath
 from upload_image import upload_image
 ```
 By doing it, we are essentially nesting 2 programs into the blynkingMail.py, which are **capture_image_usb.py**, and **upload_image.py**.
-The reason why the first of the above-mentioned program has a __usb.py_ suffix sort of is because I resolved to use a 'logi' webcamera placed on top of my screen, and plugged into the raspberry pi via USB, instead of using a raspberry pi camera. The reason for that comes down to ensuring that a clear high quality picture of the user on the desk gets taken, as it will also need to be uploaded online.
+The reason why the first of the above-mentioned programs has a __usb.py_ suffix sort of is because I resolved to use a 'logi' webcamera placed on top of my screen, and plugged into the raspberry pi via USB, instead of using a raspberry pi camera. The reason for that comes down to ensuring that a clear high quality picture of the user on the desk gets taken, as it will also need to be uploaded online.
 
 To be able to use the USB webcam, the following packages were installed:
 
@@ -358,7 +358,7 @@ If we take a quick look under the hood, we will see that the Bulma CSS framework
 ```
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
 ```
-The only issued encountered was practically how to make the grid/images responsive. However, luckily enough, the issue was sorted it out by using the below function, which will enable the image feeds section to become responsive and adapt
+The only issued encountered was practically how to make the grid/images responsive. However, luckily enough, the issue was sorted out by using the below function, which will enable the image feeds section to become responsive and adapt
                         to different screens
                         https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_matchmedia that I re-adapted to serve this project's purposes:
 ```
@@ -392,7 +392,7 @@ The #instaWeather widget instead is just an 'accessorial' feature added to the l
 
 ![alt text](image-11.png)
 
-The weather data logic is retrieved via a JavaScript Fetch API as in this example in https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6 , whose example has been re-adapted to serve the scope of the #instaPi landing page:
+The weather data logic is retrieved via a JavaScript Fetch API as in this example in https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6 , whose code has been re-adapted to serve the scope of the #instaPi landing page:
 
 ```
          // https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
@@ -467,7 +467,7 @@ https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
 
 ## Bugs/Defects
 
-The audio was meant to go out on a the laptop speakers via bluetooth, but, alas, after numerous attempts I failed. Therefore, a tester/user will have to plug in wired headset into the raspberry pi to be able to listen to the audio.
+The audio was meant to go out on a laptop speakers via bluetooth, but, alas, after numerous attempts I was unsuccessful. Therefore, a tester/user will have to plug in wired headsets into the raspberry pi to be able to listen in the audio.
 
 
 ## Contact info

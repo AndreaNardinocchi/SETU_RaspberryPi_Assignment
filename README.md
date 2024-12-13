@@ -16,18 +16,20 @@ The App utilizes several python.py files, which are linked to each other in orde
 
 
 # What this project does
-This App attempt to provide a solution to an issue that many computer science enthuses and, more in general, people working on spending leisure time on PC are facing off nowadays, which is **addiction/anxiety**.
+This App attempts to provide a solution to an issue that many computer science enthusiastic students and, more in general, people working or spending leisure time on PC are facing off nowadays, which is **addiction/anxiety**.
 
-In a nutshell, to have the Raspberry Pi keep track of the time a user spends on their PC by detecting their PC IP address and triggering a countdown (1 or 2 hours). The Sense Hat will kick off the countdown by showing colored  at some point, which will in turn change to a different color as seconds pass by. At the very last 9 seconds of the 1 or 2 hours countdown above-mentioned, the raspberry pi LEDs will show the countdown in numbers. 
+In a nutshell, we are having the Raspberry Pi keep track of the time a user spends on their PC by detecting their PC IP address and triggering a countdown (1 or 2 hours). The Sense Hat will kick off the countdown by showing a clock at first, and colored LEDs at some point, which will, in turn, change to a different color as seconds pass by. At the very last 9 seconds of the 1 or 2 hours countdown above-mentioned, the raspberry pi LEDs will show the countdown in numbers. 
 
 When the countdown is at zero, a warning message will display on the Sense Hat LEDs as well as an audio message will be triggered demanding that the user step away from the desk.
-After a few seconds a Pat Metheny Group mp3 song will start playing in the background, which, basically, give another 5/6 minutes of _grace period_ to the user (sort of 'sweet final warning').
+After a few seconds a Pat Metheny Group mp3 song will start playing in the background, which, basically, gives another 5/6 minutes of _grace period_ to the user (sort of 'sweet final warning').
 
-Once the song is over, the camera will take a photo of the user on the desk, and a notification will be sent to the user's phone as well as an email informing about the event (picture taken) with a link of the Glitch landing page, which will show a sort of picture feeds of the user itself. The goal would be to send off a notification and email to a third party, who can, then, monitor the user's activity on the Glitch landing page, and verify whether the user is still on their desk working away or whether they have finally left, as expected.
+Once the song is over, the camera will take a photo of the user on the desk, and a notification will be sent to the user's phone as well as an email informing about the event (picture taken) with a link of the Glitch landing page, which will show a sort of photo feeds of the user itself. 
+
+The goal would be to have the program send off a notification and email to a third party. This person, then, monitors the user's activity on the Glitch landing page, and verify whether the user is still on their desk working away or whether they have finally left the room, as expected.
 
 
 # Why the project is useful
-The project is useful for those users that struggle with anxiety and electronic deveices addiction, as it attempts to offer some sort of help, which will need, of course, the full support of a friend or family member who will take on the burden of checking the Glitch landing page upon receving a notification/email and , maybe, ring the user to check in on them. 
+The project is useful for those users that struggle with anxiety and electronic devices addiction, as it attempts to offer some sort of help. For the project to work, the full support of a friend or family member is required who will take on the burden of checking the Glitch landing page upon receving a notification/email and , maybe, ring the user to check in on them. 
 
 However, the main purpose of the project was for the writer to be exposed to the use of pyhton, Raspberry Pi, Sense Hat, pythonand Glitch, Bulma components, HTML, JavaScript, and node.js.
 
@@ -35,7 +37,7 @@ However, the main purpose of the project was for the writer to be exposed to the
 
 ## ip_detector.py
 
-In order for a user to be able to reproduce the expected outcome of this project **nmpa** should be installed:
+In order for a user to be able to reproduce the expected outcome of this project, **nmpa** should be installed first and foremost:
 
 ```
 sudo apt-get install nmap
@@ -49,7 +51,7 @@ Using the IP address/subnet, the user should scan for the presence of a device o
 ```
 sudo nmap -sn 999.999.999.999/99 | grep Nmap
 ```
-Tha above command is called from the **ip_detector.py** program using the subprocess library (the user wiill need to change the network address,
+The above command is called in into the **ip_detector.py** program using the subprocess library (the user will need to change the network address,
 
 ```
 import subprocess
@@ -79,12 +81,12 @@ if __name__ == "__main__":
     ]
 ```
 
-To get the program up and running the user only need to input the below command:
+To get the program up and running, the user only need to input the below command into their terminal:
 
 ```
 pythong ip_detector.py
 ```
-At that point the scanning operations will kick off, and the terminal will return the following message once the expected ip address has been detected:
+At that point the scanning operations will kick off, and the terminal should return the following message upon detecting the expected ip address:
 
 ![alt text](image-1.png)
 
@@ -108,18 +110,17 @@ As the **countdownSpeak.py** program has been called in into the ip_detector.py 
 
 In here, **Sense Hat** is called into action for the very first time.
 
-As the countdown kicks off into the _countdownSpeak()_ function, Sense Hat display a clock on its LEDs whose program can be checked in the **digitalClock.py** called in via the _clock()_ function:
+As the countdown kicks off via the _countdownSpeak()_ function, Sense Hat displays a clock on its LEDs, whose program can be checked in the **digitalClock.py** called in via the _clock()_ function:
 
 ![alt text](image-2.png)
 
- Additionally, **pyttsx3** is imported too (It is a text-to-speech conversion library in Python, which needs to be install into the raspberry pi:
+ Additionally, **pyttsx3** is imported too (It is a text-to-speech conversion library in Python, which needs to be installed into the raspberry pi):
 
 ```
 # Linux installation requirements
 sudo apt update && sudo apt install espeak ffmpeg libespeak1
 
 ```
-)
 
 As the countdown hits the 15 seconds the Sense Hat LEDs will replace the clock with a full-blown 'bright blue' background, which will, then, turn into red when hitting the 12 seconds threshold. This is just a prelude of the countdown finally showing numbers when the 9 seconds threshold gets hit. 
 
@@ -184,7 +185,7 @@ https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
 
 ## music.py
 
-This is an interesting program, which presents some interesting commands and features such as _mpg_ _321_ to have the raspberry pi play an mp3.
+This is an interesting program, which presents some compelling commands, and features, such as _mpg_ _321_ .
 
 First of all, though, _os_ is imported, which is a _module that provides a portable way of using operating system dependent functionality_ as per https://docs.python.org/3/library/os.html , which essentially enables a user to use terminal commands into a program.
 
@@ -203,7 +204,7 @@ sudo apt-get -y install mpg321
 ```
 
 However, the goal was not to use one song only, but to avail of a mini-list of 3 songs to be randomly picked out every time the program is run.
-Therefore, I resorted to using a Python’s built-in module in called _random_ to work with random data, and outlined below are the steps followed to get the program to randomly pick out a song:
+Therefore, I resorted to using a Python’s built-in module in called _random_ to work with random data. Outlined below are the steps followed to get the program to randomly pick out a song:
 
 ```
 # creating variables
@@ -252,7 +253,7 @@ except KeyboardInterrupt:
 ```
 _t1_ and _t2_ are variables calling the functions _animatedLights_ and _patMusic_ by using the callable object _target_, which will, in turn, be evoked by the _start()_ function.
 
-The _for loop_, then, and the join() function joins them together, and enables them to run simultaneously.
+The _for loop_, then, and the _join()_ function joins them together, and enables them to run simultaneously.
 
 Once the mp3 song has come to an end, the following command will get triggered:
 
@@ -285,7 +286,7 @@ https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
 
 ## blynkingMail.py
 
-This program will seamlessly connect the raspberry pi with the Blynk App to really create a IoT environment experience for the user. The main aim in here is to have a camera take a a picture of the user on the desk, upload it to a webiste (sort of an instagram feed landing page), and trigger an automation feature in Blynk which will see the user get sent an email, and a Blynk app notification on their mobile.
+This program will seamlessly connect the raspberry pi with the Blynk App to really create a IoT environment experience for the user. The main aim in here is to have a camera take a picture of the user on the desk, upload it to a website (sort of an instagram feed landing page), and trigger an automation feature in Blynk which will see the user get sent an email, and a Blynk app notification on their mobile.
 
 In order to achieve this, the user, of course, needs to open an account in https://blynk.io/ , and read the documentation to set up a template, and automations in https://blynk.cloud/dashboard/129389/automations (this link is for my account automation).
 
@@ -302,9 +303,9 @@ from capture_image_usb import captureImagePath
 from upload_image import upload_image
 ```
 By doing it, we are essentially nesting 2 programs into the blynkingMail.py, which are **capture_image_usb.py**, and **upload_image.py**.
-The reason why the first of the above-mentioned program has a __usb.py_ suffix sort of is because I resolved to use a 'logi' webcamera placed on top of my screen and plugeed into the raspberry pi via USB instead of using a raspberry pi camera. The reason for that comes down to ensuring that a clear picture of the user on the desk gets taken since it also needs to be uploaded online, hence, some high level of visibility plays in.
+The reason why the first of the above-mentioned program has a __usb.py_ suffix sort of is because I resolved to use a 'logi' webcamera placed on top of my screen, and plugged into the raspberry pi via USB, instead of using a raspberry pi camera. The reason for that comes down to ensuring that a clear high quality picture of the user on the desk gets taken, as it will also need to be uploaded online.
 
-To be able to use the USB webcome, the following packages were installed:
+To be able to use the USB webcam, the following packages were installed:
 
 ```
 sudo apt install fswebcam
@@ -312,9 +313,9 @@ sudo apt install fswebcam
 sudo usermod -a -G video <username>
 ```
 
-At the end of the randome song played out, the program will take a picture of the user, send an email, notify the user on their mobile via the Blynk app, and upload the photon on https://instapi.glitch.me/ (A sort of insta photo feed landing page craeted _ad hoc_ for this project https://github.com/AndreaNardinocchi/instaPi).
+At the end of the random song played out, the program will take a picture of the user, send an email, notify the user on their mobile via the Blynk app, and upload the photo to https://instapi.glitch.me/ (A sort of insta photo feeds landing page created _ad hoc_ for this project https://github.com/AndreaNardinocchi/instaPi).
 
-Additionally, the transport layer protocol **MQTT** was utilized as a broker to send out the image publication topic to subscribers (ex.**client_sub.py** wich should be run from a different machine or from the same one, but outside the remote raspberry pi environment for testing purposes):
+Additionally, the transport layer protocol **MQTT** was utilized as a broker to send out the image publication topic to subscribers (ex. **client_sub.py** which should be run from a different machine or from the same one, but outside the remote raspberry pi environment for testing purposes):
 
 ![alt text](image-3.png)
 
@@ -349,7 +350,7 @@ https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
 
 
 ## #instaPi
-The https://instapi.glitch.me/ landing page shows a clean and neat layout, which is also adptive/responsive to any screen size. 
+The https://instapi.glitch.me/ landing page shows a clean and neat layout, which is also adaptive/responsive to any screen size. 
 
 ![alt text](image-9.png)
 
@@ -357,7 +358,7 @@ If we take a quick look under the hood, we will see that the Bulma CSS framework
 ```
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
 ```
-The only issued encountered was practically how to make the grid/images responsive. However, luckily enough, I was able to sort it out by sing a function on The below function myFunctionx) will enable the image feed section to become responsive and adapt
+The only issued encountered was practically how to make the grid/images responsive. However, luckily enough, the issue was sorted it out by using the below function, which will enable the image feeds section to become responsive and adapt
                         to different screens
                         https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_matchmedia that I re-adapted to serve this project's purposes:
 ```
@@ -448,7 +449,7 @@ The weather data logic is retrieved via a JavaScript Fetch API as in this exampl
            }
 ```
 
-The really interesting factor here is the function _function displayCurrentWeather(data)_ which enables to show the weather data on a section on the landing page that will only display once the user has entered their query:
+The really interesting factor here is the function _function displayCurrentWeather(data)_ which makes the weather data show on a section on the landing page, which will only display once the user has entered their query:
 
 ![alt text](image-13.png)
 
@@ -466,7 +467,7 @@ https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
 
 ## Bugs/Defects
 
-The audio was meant to go out on a te laptop speakers via bluetooth, but, alas, after numerous attempts I failed. Therefore, a tester/user will have the plug in wired headset into the raspberry pi to be able to listen to the audio.
+The audio was meant to go out on a the laptop speakers via bluetooth, but, alas, after numerous attempts I failed. Therefore, a tester/user will have to plug in wired headset into the raspberry pi to be able to listen to the audio.
 
 
 ## Contact info

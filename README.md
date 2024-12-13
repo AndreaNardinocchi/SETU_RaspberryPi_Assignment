@@ -348,6 +348,121 @@ https://github.com/AndreaNardinocchi/instaPi
 https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
 
 
+## #instaPi
+The https://instapi.glitch.me/ landing page shows a clean and neat layout, which is also adptive/responsive to any screen size. 
+
+![alt text](image-9.png)
+
+If we take a quick look under the hood, we will see that the Bulma CSS framework was used, as the below code line was added inside the '< head >' tag:
+```
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css" />
+```
+The only issued encountered was practically how to make the grid/images responsive. However, luckily enough, I was able to sort it out by sing a function on The below function myFunctionx) will enable the image feed section to become responsive and adapt
+                        to different screens
+                        https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_matchmedia that I re-adapted to serve this project's purposes:
+```
+  let x = window.matchMedia("(max-width: 700px)");
+  img.src = `/uploads/${image}`;
+                     
+  // Call listener function at run time
+  myFunction(x);
+  // Attach listener function on state changes
+  x.addEventListener("change", function () {
+                                 myFunction(x);
+                             });
+                     
+                             function myFunction(x) {
+                                 if (x.matches) {
+                                     // If media query matches
+                                     img.style.width = "100%";
+                                 } else {
+                                     img.style.width = "20%";
+                                 }
+                             }
+                             img.style.padding = "0.5%";
+                             img.style.borderRadius = "10%";
+
+```
+
+
+![alt text](image-10.png)
+
+The #instaWeather widget instead is just an 'accessorial' feature added to the landing page, as we wanted to give the user the chance to check the weather after they have been stuck on their PC for long, and may have lost the sense of place and time.
+
+![alt text](image-11.png)
+
+The weather data logic is retrieved via a JavaScript Fetch API as in this example in https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6 , whose example has been re-adapted to serve the scope of the #instaPi landing page:
+
+```
+         // https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
+         
+         const API_KEY = 'c3e26a0b5387b001f6f548f5710c0baf';
+         const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
+         
+         
+         async function getWeather() {
+           const city = document.getElementById('cityInput').value;
+           if (!city) {
+             alert('Please enter a city name.');
+             return;
+           }
+           
+           try {
+             // Fetch current weather
+             const weatherResponse = await fetch(`${BASE_URL}weather?q=${city}&appid=${API_KEY}&units=metric&units`);
+             const weatherData = await weatherResponse.json();
+             displayCurrentWeather(weatherData);
+           } catch (error) {
+             console.error('Error fetching data:', error);
+             alert('Failed to fetch weather data.');
+           }
+         }
+           function displayCurrentWeather(data) {
+             const weatherBody = document.getElementById('weatherBody');
+             weatherBody.innerHTML = `
+             
+                <div class="column has-text-centered is-4">
+                  <p class="has-text-weight-bold"> City </p>
+                  <p>${data.name}</p>
+                </div>
+                <div class="column has-text-centered is-4">
+                  <p class="has-text-weight-bold"> Temperature </p>
+                  <p>${data.main.temp}°C</p>
+                </div>
+                <div class="column has-text-centered is-4">
+                  <p class="has-text-weight-bold"> Condition </p>
+                  <p>${data.weather[0].description}</p>
+                </div>
+             `;
+           }
+           
+           function displayForecast(data) {
+             const forecastBody = document.getElementById('forecastBody');
+             forecastBody.innerHTML = '';
+         
+             // Forecast data comes in 3-hour intervals, so we'll filter to get daily forecasts
+             const dailyForecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+             dailyForecasts.forEach(forecast => {
+               const date = new Date(forecast.dt_txt).toLocaleDateString();
+             });
+           }
+```
+
+The really interesting factor here is the function _function displayCurrentWeather(data)_ which enables to show the weather data on a section on the landing page that will only display once the user has entered their query:
+
+![alt text](image-13.png)
+
+
+
+
+### Sources
+
+https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
+
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_matchmedia
+
+https://tutors.dev/course/setu-hdip-comp-sci-2024-comp-sys
+
 
 ## Bugs/Defects
 

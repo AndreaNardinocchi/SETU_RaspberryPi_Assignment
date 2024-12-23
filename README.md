@@ -10,6 +10,9 @@ This is a python.py project with a Raspberry Pi, Sense Hat, camera, and a Glitch
 # SETU RaspberryPi Assignment
 This is a Raspberry Pi/IoT project created to be submitted as a final assignment for [SETU](https://www.setu.ie/), Ireland.
 
+## Project Video
+https://www.youtube.com/watch?v=mWmsU2DsWU4
+
 # App
 The App utilizes several python.py files, which are linked to each other in order to achieve a seamless flow of intended actions triggered by one python command only on the python file on the 'top of the chain'. However, part of the final outcome will be viewable on a [Glitch](https://glitch.com/) landing page where other progamming languages will kick in to close the circle on the overall project.
 
